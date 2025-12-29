@@ -1,0 +1,43 @@
+{
+  "name": "@jonnytizz/simple-color-lib",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Simple, 0 dependency, color manipulation library, meant for learning and probably not production 😅",
+  "author": "Jon Tizzard",
+  "license": "MIT",
+  "homepage": "https://github.com/JonnyTizz/simple-color-lib#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonnyTizz/simple-color-lib.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JonnyTizz/simple-color-lib/issues"
+  },
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.3",
+    "bumpp": "^10.3.2",
+    "tsdown": "^0.18.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.16"
+  }
+}
