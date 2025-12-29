@@ -5,6 +5,7 @@
   "description": "Simple, 0 dependency, color manipulation library, meant for learning and probably not production 😅",
   "author": "Jon Tizzard",
   "license": "MIT",
+  "private": false,
   "homepage": "https://github.com/JonnyTizz/simple-color-lib#readme",
   "repository": {
     "type": "git",
