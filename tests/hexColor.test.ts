@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { extractRGBChannels, shiftHexColor } from "../src/hexColor";
+import { extractRGBChannels, shiftColorChannels, shiftHexColor } from "../src/hexColor";
 
 describe("testing bit shifting", () => {
 	it.skip("should map hex values", () => {
@@ -94,5 +94,49 @@ describe("hex color helpers", () => {
 		});
 	});
 
-	// describe("shift color channels", () => {});
+	describe("shift color channels", () => {
+		it("should shift color channels up evenly", () => {
+			// Arrange
+			const channels = [100, 150, 200];
+
+			// Act
+			const shiftedChannels = shiftColorChannels(channels, 10);
+
+			// Assert
+			expect(shiftedChannels).toEqual([110, 160, 210]);
+		});
+
+		it("should shift color channels down evenly", () => {
+			// Arrange
+			const channels = [100, 150, 200];
+
+			// Act
+			const shiftedChannels = shiftColorChannels(channels, -10);
+
+			// Assert
+			expect(shiftedChannels).toEqual([90, 140, 190]);
+		});
+
+		it("should clamp color channels to a minimum of 0", () => {
+			// Arrange
+			const channels = [5, 3, 7];
+
+			// Act
+			const shiftedChannels = shiftColorChannels(channels, -10);
+
+			// Assert
+			expect(shiftedChannels).toEqual([0, 0, 0]);
+		});
+
+		it("should clamp color channels to a maximum of 255", () => {
+			// Arrange
+			const channels = [250, 253, 255];
+
+			// Act
+			const shiftedChannels = shiftColorChannels(channels, 10);
+
+			// Assert
+			expect(shiftedChannels).toEqual([255, 255, 255]);
+		});
+	});
 });
