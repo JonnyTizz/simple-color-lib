@@ -1,48 +1,39 @@
-const ShortHexColorRegex = /^#([0-9a-fA-F]{3})$/;
-const ShortHexColorRegexWithAlpha = /^#([0-9a-fA-F]{4})$/;
-const LongHexColorRegex = /^#([0-9a-fA-F]{6})$/;
-const LongHexColorRegexWithAlpha = /^#([0-9a-fA-F]{8})$/;
+const HexColorRegex = /^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
 
 export const shiftHexColor = (hexColor: string, shift: number): string => {
-	let hexString = hexColor.substring(1);
+	let hexString = "";
 	let alphaString = "";
 
-	if (ShortHexColorRegexWithAlpha.test(hexColor)) {
-		hexString = hexColor.substring(1, 4);
-		alphaString = hexColor.substring(4);
-	} else if (LongHexColorRegexWithAlpha.test(hexColor)) {
-		hexString = hexColor.substring(1, 7);
-		alphaString = hexColor.substring(7);
-	} else if (ShortHexColorRegex.test(hexColor) || LongHexColorRegex.test(hexColor)) {
-		hexString = hexColor.substring(1);
-	} else {
-		return hexColor;
+	if (!HexColorRegex.test(hexColor)) {
+		return hexColor; // or throw?
 	}
 
-	// expand to 6 chars
-	hexString =
-		hexString.length === 3
-			? hexString
-					.split("")
-					.map((c) => `${c}${c}`)
-					.join("")
-			: hexString;
+	if (hexColor.length <= 5) {
+		hexString = hexColor.substring(1, 4);
+		hexString = padTo6Chars(hexString);
+		alphaString = hexColor.substring(4);
+	} else {
+		hexString = hexColor.substring(1, 7);
+		alphaString = hexColor.substring(7);
+	}
 
-	// convert to numbers
 	const colorValue: number = Number.parseInt(hexString, 16);
 
-	// extract channels
 	const channels: number[] = extractRGBChannels(colorValue);
 
-	// shift value
 	const shiftedChannels: number[] = shiftColorChannels(channels, shift);
 
-	// combine to hex string
 	const rgb = shiftedChannels.reduce((prev, current) => `${prev}${current.toString(16).padStart(2, "0")}`, "#");
 
 	const alphaSuffix = alphaString.length === 1 ? `${alphaString}${alphaString}` : alphaString;
 
 	return alphaString ? `${rgb}${alphaSuffix}` : rgb;
+};
+
+export const padTo6Chars = (hexString: string): string => {
+	return hexString.length === 3
+		? `${hexString[0]}${hexString[0]}${hexString[1]}${hexString[1]}${hexString[2]}${hexString[2]}`
+		: hexString;
 };
 
 export const extractRGBChannels = (hexColor: number): number[] => {
