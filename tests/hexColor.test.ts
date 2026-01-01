@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { extractRGBChannels, shiftColorChannels, shiftHexColor } from "../src/hexColor";
 
 describe("testing bit shifting", () => {
+	// experiment test case for understanding bitwise operations
 	it.skip("should map hex values", () => {
 		const hex = 0xaabbcc;
 		const mask = 0xff0000;
