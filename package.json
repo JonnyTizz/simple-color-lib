@@ -1,7 +1,7 @@
 {
   "name": "@jonnytizz/simple-color-lib",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Simple, 0 dependency, color manipulation library, meant for learning and probably not production 😅",
   "author": "Jon Tizzard",
   "license": "MIT",
